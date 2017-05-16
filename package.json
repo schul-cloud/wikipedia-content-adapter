@@ -1,0 +1,22 @@
+{
+  "name": "wikipedia-content-adapter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schul-cloud/wikipedia-content-adapter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schul-cloud/wikipedia-content-adapter/issues"
+  },
+  "homepage": "https://github.com/schul-cloud/wikipedia-content-adapter#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
