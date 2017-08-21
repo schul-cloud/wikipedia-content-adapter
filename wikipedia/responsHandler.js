@@ -60,7 +60,32 @@ module.exports.getHandler= function(params){
     Handler.maxCount = 0;
 
     Handler.isValid = function(result){
-        return true;
+            result = result.attributes;
+            var valid = true ;
+            for( var i = 0 ; i < this.count; i++){
+                var filterObj = this.data[i];
+                switch (filterObj.name){
+                    case "license":
+                        var isInLicenses = false;
+                        for(var license in result["licenses"]){
+                            isInLicenses = isInLicenses || filterObj.value == result.licenses[license].value;
+                        }
+                        valid = valid && isInLicenses;
+                        break;
+                    case "language" :
+                        var isInLanguages = false;
+                        for(var language in result["languages"]){
+                            isInLanguages = isInLanguages || filterObj.value == result.languages[language];
+                        }
+                        valid = valid && isInLanguages;
+                        break;
+                    default:
+                        valid = valid && result[filterObj.name] == filterObj.value;
+                        valid = valid || result[filterObj.name] == undefined;
+                        break;
+                }
+            }
+            return valid;
     };
 
 
