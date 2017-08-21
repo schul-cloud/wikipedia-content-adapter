@@ -2,8 +2,12 @@ var express = require('express');
 var app = express();
 
 app.get('/v1', function (req, res) {
-    res.contentType("application/+vm.json");
-    var wikipedia = require("wikipedia/request.js").makeRequest(req.query,
+    res = res.set('content-type', 'application/vnd.api+json');
+    var accept = !(typeof req.header("accept") == 'undefined');
+    accept = accept && !(req.header("accept") == " ");
+    accept = accept && !(req.header("accept") == "");
+    accept = accept && req.accepts('application/vnd.api+json');
+    var wikipedia = require("wikipedia/request.js").makeRequest(req.query,accept,
         function (message,status) // error Message callback
         {
             res.status(status);
@@ -11,6 +15,7 @@ app.get('/v1', function (req, res) {
         },
         function (message) // sendMessage callback
         {
+            res.status(200);
             res.send(message);
         }
     );
