@@ -1,5 +1,5 @@
 const url = "https://de.wikipedia.org/w/api.php";
-const queryParams = ["action=query","format=json","list=search"];
+const queryParams = ["action=query","format=json","list=search","srlimit=30"];
 const squery = "?action=query&format=json&list=search&srsearch=Einstein";
 
 
@@ -64,12 +64,15 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
         errCallback(errorHandler.getMessage(status),status);
         return 0;
     }
-    console.log(getRequestUrl(params.q));
     request(getRequestUrl(params.q))
         .then(function(requestResult){
             return JSON.parse(requestResult);
         })
         .then(function(JSONresponse){
-            sendCallback(JSON.stringify(JSONresponse));
+            var responseHandler = require("./responsHandler.js").getHandler(params);
+            for(element in JSONresponse.query.search)
+                responseHandler.addData(JSONresponse.query.search[element]);
+
+            sendCallback(responseHandler.getResponse());
         });
 };
