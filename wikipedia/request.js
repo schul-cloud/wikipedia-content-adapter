@@ -1,4 +1,4 @@
-const url = "https://de.wikipedia.org/w/api";
+const url = "https://de.wikipedia.org/w/api.php";
 const queryParams = ["action=query","format=json","list=search"];
 const squery = "?action=query&format=json&list=search&srsearch=Einstein";
 
@@ -64,6 +64,7 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
         errCallback(errorHandler.getMessage(status),status);
         return 0;
     }
+    console.log(getRequestUrl(params.q));
     request(getRequestUrl(params.q))
         .then(function(requestResult){
             return JSON.parse(requestResult);
