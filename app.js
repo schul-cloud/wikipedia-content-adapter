@@ -7,14 +7,16 @@ app.get('/v1', function (req, res) {
     accept = accept && !(req.header("accept") == " ");
     accept = accept && !(req.header("accept") == "");
     accept = accept && req.accepts('application/vnd.api+json');
-    var wikipedia = require("wikipedia/request.js").makeRequest(req.query,accept,
+    var wikipedia = require("./wikipedia/request.js").makeRequest(req.query,accept,
         function (message,status) // error Message callback
         {
+            if(typeof message === Object) message = JSON.stringify(message);
             res.status(status);
             res.send(message);
         },
         function (message) // sendMessage callback
         {
+            if(typeof message === Object) message = JSON.stringify(message);
             res.status(200);
             res.send(message);
         }

@@ -1,4 +1,4 @@
-const url = "de.wikipedia.org/w/api";
+const url = "https://de.wikipedia.org/w/api";
 const queryParams = ["action=query","format=json","list=search"];
 const squery = "?action=query&format=json&list=search&srsearch=Einstein";
 
@@ -17,16 +17,16 @@ function getParams(query , params){
     }
     if (isUndefined(query.Q)) return 400;
     params.q = encodeURIComponent(query.Q);
-    if (isUndefined(query.page)) {
+    if (!isUndefined(query.page)) {
         params.page.limit  = isUndefined(query.page.limit)  ? Number(params.page.limit)  : Number(query.page.limit);
         params.page.offset = isUndefined(query.page.offset) ? Number(params.page.offset) : Number(query.page.offset);
         if (!isUndefined(query.page.limit)  && query.page.limit == '')  return 400;
         if (!isUndefined(query.page.offset) && query.page.offset == '') return 400;
     }
-    if ( isNaN(pageParams.limit)  || pageParams.limit <= 0) return 400;
-    if ( isNaN(pageParams.offset) || pageParams.offset < 0) return 400;
+    if ( isNaN(params.page.limit)  || params.page.limit <= 0) return 400;
+    if ( isNaN(params.page.offset) || params.page.offset < 0) return 400;
 
-    if (isUndefined(query.filter)){
+    if (!isUndefined(query.filter)){
         for( filter in query.filter	){
             params.filter.count++ ;
             params.filter.data.push(
@@ -37,14 +37,15 @@ function getParams(query , params){
             );
         }
     }
+    return 200;
 }
-var errorHandler = require("./errorhandler");
+var errorHandler = require("./errorhandler.js");
 
 module.exports.makeRequest =  function (query, accept , errCallback ,sendCallback) {
     var request = require('request-promise');
     var status = 200;
     if (!accept) {
-        errCallback(errorHandler(406),406);
+        errCallback(errorHandler.getMessage(406),406);
         return 0;
     }
     var params = {
@@ -58,15 +59,16 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
             data : []
         }
     };
-    request(getRequestUrl(q))
+    status = getParams(query,params);
+    if (status!=200){
+        errCallback(errorHandler.getMessage(status),status);
+        return 0;
+    }
+    request(getRequestUrl(params.q))
         .then(function(requestResult){
-            return JSON.parse(requestResult);})
+            return JSON.parse(requestResult);
+        })
         .then(function(JSONresponse){
-            status = getParams(query,params);
-            if (status!=200){
-                errCallback(status,status);
-                return 0;
-            }
             sendCallback(JSON.stringify(JSONresponse));
         });
 };

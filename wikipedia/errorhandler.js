@@ -27,17 +27,17 @@ function getErrorMessage(status){
 }
 
 
-modules.exports.getMessage = function (status) {
+module.exports.getMessage = function (status) {
     var message = {
-        "jsonapi":{
-            "version": "1.0",
-            "meta" :{
-                "name": "wikipedia-content-adapter",
-                "source": "https://github.com/schul-cloud/wikipedia-content-adapter",
-                "description": "This is an adpter for infos from wikipedia."
+        jsonapi:{
+            version: "1.0",
+            meta :{
+                name: "wikipedia-content-adapter",
+                source: "https://github.com/schul-cloud/wikipedia-content-adapter",
+                description: "This is an adpter for infos from wikipedia."
             }
         },
-        "errors": []
+        errors: []
     };
 
     message.errors.push(getErrorMessage(status));
