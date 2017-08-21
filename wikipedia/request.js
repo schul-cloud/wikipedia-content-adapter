@@ -1,7 +1,5 @@
 const url = "https://de.wikipedia.org/w/api.php";
 const queryParams = ["action=query","format=json","list=search","srlimit=30"];
-const squery = "?action=query&format=json&list=search&srsearch=Einstein";
-
 
 function isUndefined(object){ return typeof object == 'undefined';  }
 
@@ -41,7 +39,7 @@ function getParams(query , params){
 }
 var errorHandler = require("./errorhandler.js");
 
-module.exports.makeRequest =  function (query, accept , errCallback ,sendCallback) {
+module.exports.makeRequest =  function (query,serveraddress, accept , errCallback ,sendCallback) {
     var request = require('request-promise');
     var status = 200;
     if (!accept) {
@@ -57,7 +55,8 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
         filter : {
             count : 0,
             data : []
-        }
+        },
+        serveraddress : serveraddress
     };
     status = getParams(query,params);
     if (status!=200){
@@ -72,7 +71,10 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
             var responseHandler = require("./responsHandler.js").getHandler(params);
             for(element in JSONresponse.query.search)
                 responseHandler.addData(JSONresponse.query.search[element]);
-
+            if (responseHandler.data.length == 0){
+                errCallback(errorHandler.getMessage(404),404);
+                return 0;
+            }
             sendCallback(responseHandler.getResponse());
         });
 };
