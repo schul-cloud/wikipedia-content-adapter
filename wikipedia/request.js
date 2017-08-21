@@ -34,13 +34,13 @@ function getParams(query , params){
         }
     }
 }
-
+var errorHandler = require("./errorhandler");
 
 module.exports.makeRequest =  function (query, accept , errCallback ,sendCallback) {
     var request = require('request-promise');
     var status = 200;
     if (!accept) {
-        errCallback("Error",404);
+        errCallback(errorHandler(406),406);
         return 0;
     }
     var params = {
@@ -60,7 +60,7 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
         .then(function(JSONresponse){
             status = getParams(query,params);
             if (status!=200){
-                errCallback("Error",status);
+                errCallback(status,status);
                 return 0;
             }
             sendCallback(JSON.stringify(JSONresponse));
