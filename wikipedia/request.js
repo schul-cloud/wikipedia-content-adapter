@@ -1,9 +1,13 @@
 const url = "de.wikipedia.org/w/api";
-
+const queryParams = ["action=query","format=json","list=search"];
 const squery = "?action=query&format=json&list=search&srsearch=Einstein";
+
 
 function isUndefined(object){ return typeof object == 'undefined';  }
 
+function getRequestUrl(q) {
+    return url+ "?"+ queryParams.join("&") + "&srsearch="+q;
+}
 
 function getParams(query , params){
     for(var element in query){
@@ -54,7 +58,7 @@ module.exports.makeRequest =  function (query, accept , errCallback ,sendCallbac
             data : []
         }
     };
-    request(url+squery)
+    request(getRequestUrl(q))
         .then(function(requestResult){
             return JSON.parse(requestResult);})
         .then(function(JSONresponse){
