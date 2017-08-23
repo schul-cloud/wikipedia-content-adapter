@@ -29,7 +29,7 @@ function getParams(query , params){
             params.filter.count++ ;
             params.filter.data.push(
                 {
-                    name:filterParam,
+                    name:filter,
                     value:query.filter[filter]
                 }
             );

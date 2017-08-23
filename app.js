@@ -26,6 +26,7 @@ app.get('/v1', function (req, res) {
     accept = accept && !(req.header("accept") == " ");
     accept = accept && !(req.header("accept") == "");
     accept = accept && req.accepts('application/vnd.api+json');
+    console.log(req.header("accept"))
     var fullUrl = req.protocol + '://' + address +":" + port + req.path;
     var wikipedia = require("./wikipedia/request.js").makeRequest(req.query,fullUrl,accept,
         function (message,status) // error Message callback
@@ -45,7 +46,7 @@ app.get('/v1', function (req, res) {
 
 
 
-process.title = "wikimedia";
+process.title = "wikipedia";
 console.log(process.title);
 var server = app.listen(port, function () {
     console.log("Example app listening at http://%s:%s", address, port)

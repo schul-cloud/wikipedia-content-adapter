@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js ",
+    "pretest": "node app.js&",
+    "test":  "python3 -m schul_cloud_search_tests.search --url=http://localhost:3000/v1",
+    "posttest": "npm stop",
+    "stop":  "pkill wikipedia"
   },
   "repository": {
     "type": "git",
