@@ -126,7 +126,7 @@ module.exports.getHandler= function(params){
     };
     Handler.addData = function(element) {
         var result = RequestDataObject(1);
-        result.id = ++this.resourceId;
+        result.id = (++this.resourceId).toString();
         result.attributes.title = element.title;
         result.attributes.url = "https://de.wikipedia.org/wiki/"+ encodeURIComponent(element.title);
         result.attributes.description = element.snippet;
