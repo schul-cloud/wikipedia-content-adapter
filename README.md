@@ -1,5 +1,5 @@
 # wikipedia-content-adapter
-[![Travis Status](https://travis-ci.org/schul-cloud/wikimedia-content-adapter.svg?branch=master)](https://travis-ci.org/schul-cloud/wikimedia-content-adapter)
+[![Travis Status](https://travis-ci.org/schul-cloud/wikipedia-content-adapter.svg?branch=master)](https://travis-ci.org/schul-cloud/wikimedia-content-adapter)
 
 
 This repository contains a service adapter for querying the [Wikipedia API][wikipedia-api].
