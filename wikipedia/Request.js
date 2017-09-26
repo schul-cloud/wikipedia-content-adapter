@@ -37,7 +37,7 @@ function getParams(query , params){
     }
     return 200;
 }
-var errorHandler = require("./errorhandler.js");
+var errorHandler = require("./ErrorHandler.js");
 
 module.exports.makeRequest =  function (query,serveraddress, accept , errCallback ,sendCallback) {
     var request = require('request-promise');
@@ -68,7 +68,7 @@ module.exports.makeRequest =  function (query,serveraddress, accept , errCallbac
             return JSON.parse(requestResult);
         })
         .then(function(JSONresponse){
-            var responseHandler = require("./responsHandler.js").getHandler(params);
+            var responseHandler = require("./ResponseHandler.js").getHandler(params);
             for(element in JSONresponse.query.search)
                 responseHandler.addData(JSONresponse.query.search[element]);
             sendCallback(responseHandler.getResponse());

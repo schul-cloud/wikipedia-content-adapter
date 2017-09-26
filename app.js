@@ -27,7 +27,7 @@ app.get('/v1', function (req, res) {
     accept = accept && !(req.header("accept") == "");
     accept = accept && req.accepts('application/vnd.api+json');
     var fullUrl = req.protocol + '://' + address +":" + port + req.path;
-    var wikipedia = require("./wikipedia/request.js").makeRequest(req.query,fullUrl,accept,
+    var wikipedia = require("./wikipedia/Request.js").makeRequest(req.query,fullUrl,accept,
         function (message,status) // error Message callback
         {
             res.status(status);
