@@ -71,10 +71,6 @@ module.exports.makeRequest =  function (query,serveraddress, accept , errCallbac
             var responseHandler = require("./responsHandler.js").getHandler(params);
             for(element in JSONresponse.query.search)
                 responseHandler.addData(JSONresponse.query.search[element]);
-            if (responseHandler.data.length == 0){
-                errCallback(errorHandler.getMessage(404),404);
-                return 0;
-            }
             sendCallback(responseHandler.getResponse());
         });
 };
