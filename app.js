@@ -30,15 +30,13 @@ app.get('/v1', function (req, res) {
     var wikipedia = require("./wikipedia/request.js").makeRequest(req.query,fullUrl,accept,
         function (message,status) // error Message callback
         {
-            if(typeof message === Object) message = JSON.stringify(message);
             res.status(status);
-            res.send(message);
+            res.json(message);
         },
         function (message) // sendMessage callback
         {
-            if(typeof message === Object) message = JSON.stringify(message);
             res.status(200);
-            res.send(message);
+            res.json(message);
         }
     );
 });
